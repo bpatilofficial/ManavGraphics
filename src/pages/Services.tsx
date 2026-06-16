@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
+  type LucideIcon,
   Printer,
   FileText,
   CreditCard,
@@ -17,7 +18,7 @@ import {
 } from 'lucide-react';
 import { services, businessInfo } from '../data/services';
 
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const iconMap: Record<string, LucideIcon> = {
   Disc3,
   Printer,
   FileText,
@@ -31,7 +32,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   Sparkles,
 };
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,

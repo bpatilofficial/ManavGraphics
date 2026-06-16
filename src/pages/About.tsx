@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { Printer, Award, Users, CheckCircle, Target, Eye } from 'lucide-react';
-import { stats, businessInfo } from '../data/services';
+import { stats } from '../data/services';
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,

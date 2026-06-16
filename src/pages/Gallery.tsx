@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Printer } from 'lucide-react';
 import { galleryCategories } from '../data/services';
 
@@ -10,7 +10,7 @@ const placeholderImages = Array.from({ length: 12 }, (_, i) => ({
   category: galleryCategories[(i % (galleryCategories.length - 1)) + 1],
 }));
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,

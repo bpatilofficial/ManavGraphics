@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send, CheckCircle } from 'lucide-react';
+import { motion, type Variants } from 'framer-motion';
+import { Phone, Mail, MapPin, Clock, MessageCircle, CheckCircle } from 'lucide-react';
 import { businessInfo, services } from '../data/services';
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
