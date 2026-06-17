@@ -34,6 +34,7 @@ export const services: Service[] = [
     icon: 'FileText',
     features: ['Multiple paper types', 'Various sizes', 'Color & B&W', 'Finishing options'],
     category: 'Digital Printing',
+    gallery: 'paper-printing',
   },
   {
     id: 'id-card-printing',
@@ -85,7 +86,6 @@ export const services: Service[] = [
     icon: 'Heart',
     features: ['Custom designs', 'Premium paper', 'Box packaging', 'Traditional & modern'],
     category: 'Wedding Cards',
-    gallery: 'wedding-cards',
   },
   {
     id: 'sticker-printing',
@@ -110,7 +110,7 @@ export const services: Service[] = [
 export const galleryCollections = [
   { key: 'digital-printing', label: 'Digital Printing', count: 7 },
   { key: 'dvd-printing', label: 'CD & DVD Printing', count: 12 },
-  { key: 'wedding-cards', label: 'Wedding Cards', count: 6 },
+  { key: 'paper-printing', label: 'Paper Printing', count: 6 },
   { key: 'id-cards', label: 'ID Cards', count: 8 },
   { key: 'flex-printing', label: 'Flex Printing', count: 6 },
   { key: 'mug-printing', label: 'Mug Printing', count: 3 },
