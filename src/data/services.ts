@@ -1,4 +1,14 @@
-export const services = [
+export type Service = {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  features: string[];
+  category: string;
+  gallery?: string;
+};
+
+export const services: Service[] = [
   {
     id: 'cd-dvd-printing',
     title: 'CD & DVD Printing',
@@ -6,6 +16,7 @@ export const services = [
     icon: 'Disc3',
     features: ['Full-color printing', 'Custom labels', 'Bulk orders', 'Quick turnaround'],
     category: 'Digital Printing',
+    gallery: 'dvd-printing',
   },
   {
     id: 'digital-printing',
@@ -14,6 +25,7 @@ export const services = [
     icon: 'Printer',
     features: ['High resolution', 'Any quantity', 'Fast delivery', 'Cost effective'],
     category: 'Digital Printing',
+    gallery: 'digital-printing',
   },
   {
     id: 'paper-printing',
@@ -30,6 +42,7 @@ export const services = [
     icon: 'CreditCard',
     features: ['PVC cards', 'Lamination', 'Custom design', 'Bulk orders'],
     category: 'ID Cards',
+    gallery: 'id-cards',
   },
   {
     id: 'mug-printing',
@@ -38,6 +51,7 @@ export const services = [
     icon: 'Coffee',
     features: ['Photo printing', 'Dishwasher safe', 'Custom designs', 'Gift packaging'],
     category: 'Mug Printing',
+    gallery: 'mug-printing',
   },
   {
     id: 'flex-printing',
@@ -46,6 +60,7 @@ export const services = [
     icon: 'Maximize',
     features: ['Weather resistant', 'Any size', 'Vibrant colors', 'Indoor & outdoor'],
     category: 'Flex Printing',
+    gallery: 'flex-printing',
   },
   {
     id: 'banner-printing',
@@ -70,6 +85,7 @@ export const services = [
     icon: 'Heart',
     features: ['Custom designs', 'Premium paper', 'Box packaging', 'Traditional & modern'],
     category: 'Wedding Cards',
+    gallery: 'wedding-cards',
   },
   {
     id: 'sticker-printing',
@@ -89,15 +105,41 @@ export const services = [
   },
 ];
 
-export const galleryCategories = [
-  'All',
-  'Digital Printing',
-  'Mug Printing',
-  'ID Cards',
-  'Wedding Cards',
-  'Banners',
-  'Flex Printing',
-];
+// Each collection maps a gallery folder (public/gallery/<key>/) to a display
+// label and the number of images it holds (named 1.jpeg ... N.jpeg).
+export const galleryCollections = [
+  { key: 'digital-printing', label: 'Digital Printing', count: 7 },
+  { key: 'dvd-printing', label: 'CD & DVD Printing', count: 12 },
+  { key: 'wedding-cards', label: 'Wedding Cards', count: 6 },
+  { key: 'id-cards', label: 'ID Cards', count: 8 },
+  { key: 'flex-printing', label: 'Flex Printing', count: 6 },
+  { key: 'mug-printing', label: 'Mug Printing', count: 3 },
+] as const;
+
+export const galleryCategories = ['All', ...galleryCollections.map((c) => c.label)];
+
+export type GalleryImage = {
+  id: string;
+  src: string;
+  alt: string;
+  category: string;
+};
+
+// Path to a gallery image, prefixed with the Vite base URL so it resolves
+// correctly under GitHub Pages (served from /ManavGraphics/).
+export function galleryImageSrc(key: string, n: number): string {
+  return `${import.meta.env.BASE_URL}gallery/${key}/${n}.jpeg`;
+}
+
+// Flat list of every gallery image, in collection order.
+export const galleryImages: GalleryImage[] = galleryCollections.flatMap((c) =>
+  Array.from({ length: c.count }, (_, i) => ({
+    id: `${c.key}-${i + 1}`,
+    src: galleryImageSrc(c.key, i + 1),
+    alt: `${c.label} sample ${i + 1}`,
+    category: c.label,
+  }))
+);
 
 export const testimonials = [
   {

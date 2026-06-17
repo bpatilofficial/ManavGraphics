@@ -38,8 +38,12 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-animated-gradient flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <span className="text-white font-poppins font-bold text-lg md:text-xl">M</span>
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden group-hover:scale-105 transition-transform">
+              <img
+                src={`${import.meta.env.BASE_URL}logo.png`}
+                alt="Manav Graphics logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <h1 className={`font-poppins font-bold text-lg md:text-xl leading-tight transition-colors ${scrolled ? 'text-dark-900' : 'text-white'}`}>

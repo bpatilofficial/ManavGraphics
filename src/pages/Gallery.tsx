@@ -1,14 +1,7 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Printer } from 'lucide-react';
-import { galleryCategories } from '../data/services';
-
-const placeholderImages = Array.from({ length: 12 }, (_, i) => ({
-  id: i + 1,
-  src: `/assets/gallery/image-${i + 1}.jpg`,
-  alt: `Manav Graphics Work Sample ${i + 1}`,
-  category: galleryCategories[(i % (galleryCategories.length - 1)) + 1],
-}));
+import { galleryCategories, galleryImages } from '../data/services';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -24,8 +17,8 @@ export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filtered = activeCategory === 'All'
-    ? placeholderImages
-    : placeholderImages.filter((img) => img.category === activeCategory);
+    ? galleryImages
+    : galleryImages.filter((img) => img.category === activeCategory);
 
   const openLightbox = useCallback((index: number) => setLightboxIndex(index), []);
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
@@ -107,14 +100,18 @@ export default function Gallery() {
                   <div
                     className={`relative overflow-hidden rounded-xl ${
                       i % 3 === 0 ? 'aspect-[3/4]' : i % 3 === 1 ? 'aspect-square' : 'aspect-[4/3]'
-                    } bg-gradient-to-br from-dark-100 to-dark-200 flex items-center justify-center`}
+                    } bg-gradient-to-br from-dark-100 to-dark-200`}
                   >
-                    <Printer size={40} className="text-dark-300" />
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
 
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-end p-5">
-                      <p className="text-white font-inter font-medium text-sm">{img.alt}</p>
-                      <span className="inline-block mt-2 bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">
+                      <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">
                         {img.category}
                       </span>
                     </div>
@@ -169,18 +166,17 @@ export default function Gallery() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="max-w-4xl max-h-[80vh] rounded-xl overflow-hidden"
+              className="max-w-4xl max-h-[80vh] rounded-xl overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="w-full min-h-[60vh] bg-gradient-to-br from-dark-200 to-dark-300 flex items-center justify-center rounded-xl">
-                <div className="text-center">
-                  <Printer size={64} className="text-dark-400 mx-auto mb-4" />
-                  <p className="text-dark-500 font-inter">{filtered[lightboxIndex]?.alt}</p>
-                  <p className="text-dark-400 font-inter text-sm mt-2">
-                    {lightboxIndex + 1} / {filtered.length}
-                  </p>
-                </div>
-              </div>
+              <img
+                src={filtered[lightboxIndex]?.src}
+                alt={filtered[lightboxIndex]?.alt}
+                className="w-full max-h-[72vh] object-contain rounded-xl bg-dark-900"
+              />
+              <p className="text-white/70 font-inter text-sm text-center mt-3">
+                {filtered[lightboxIndex]?.category} &middot; {lightboxIndex + 1} / {filtered.length}
+              </p>
             </motion.div>
           </motion.div>
         )}

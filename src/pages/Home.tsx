@@ -14,7 +14,7 @@ import {
   Star,
   CheckCircle,
 } from 'lucide-react';
-import { services, testimonials, stats, businessInfo } from '../data/services';
+import { services, testimonials, stats, businessInfo, galleryImages } from '../data/services';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -35,6 +35,13 @@ const whyChooseUs = [
 ];
 
 const whatsappUrl = `https://wa.me/91${businessInfo.whatsapp}?text=${encodeURIComponent('Hello Manav Graphics, I need printing services.')}`;
+
+// Eight gallery images spread across categories for the homepage preview grid.
+const previewStep = Math.max(1, Math.floor(galleryImages.length / 8));
+const previewImages = Array.from(
+  { length: 8 },
+  (_, i) => galleryImages[(i * previewStep) % galleryImages.length]
+);
 
 export default function Home() {
   return (
@@ -197,10 +204,21 @@ export default function Home() {
                 className="group bg-white rounded-2xl overflow-hidden border border-dark-100 card-hover"
               >
                 <div className="h-40 bg-gradient-to-br from-cyan-50 via-magenta-50 to-printyellow-50 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-animated-gradient opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-magenta-500 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Printer size={28} className="text-white" />
-                  </div>
+                  {service.gallery ? (
+                    <img
+                      src={`${import.meta.env.BASE_URL}gallery/${service.gallery}/1.jpeg`}
+                      alt={service.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-animated-gradient opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-magenta-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Printer size={28} className="text-white" />
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="p-5">
                   <h3 className="font-poppins font-semibold text-base text-dark-900 mb-2">{service.title}</h3>
@@ -280,9 +298,9 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[...Array(8)].map((_, i) => (
+            {previewImages.map((img, i) => (
               <motion.div
-                key={i}
+                key={img.id}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-50px' }}
@@ -292,11 +310,16 @@ export default function Home() {
                   i === 0 || i === 5 ? 'md:col-span-2 md:row-span-2' : ''
                 }`}
               >
-                <div className="aspect-square bg-gradient-to-br from-dark-100 to-dark-200 flex items-center justify-center">
-                  <Printer size={32} className="text-dark-300" />
+                <div className="aspect-square bg-gradient-to-br from-dark-100 to-dark-200 overflow-hidden">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <p className="text-white font-inter text-sm">Sample Work {i + 1}</p>
+                  <p className="text-white font-inter text-sm">{img.category}</p>
                 </div>
               </motion.div>
             ))}

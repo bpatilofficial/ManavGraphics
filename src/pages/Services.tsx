@@ -82,6 +82,9 @@ export default function Services() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, i) => {
               const IconComponent = iconMap[service.icon] || Printer;
+              const thumbnail = service.gallery
+                ? `${import.meta.env.BASE_URL}gallery/${service.gallery}/1.jpeg`
+                : null;
               return (
                 <motion.div
                   key={service.id}
@@ -92,12 +95,26 @@ export default function Services() {
                   variants={fadeUp}
                   className="group bg-white rounded-2xl overflow-hidden border border-dark-100 card-hover"
                 >
-                  {/* Image placeholder */}
+                  {/* Image / placeholder */}
                   <div className="h-48 bg-gradient-to-br from-cyan-50 via-white to-magenta-50 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-animated-gradient opacity-0 group-hover:opacity-5 transition-opacity duration-500" />
-                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-500 via-magenta-500 to-printyellow-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                      <IconComponent size={36} className="text-white" />
-                    </div>
+                    {thumbnail ? (
+                      <>
+                        <img
+                          src={thumbnail}
+                          alt={service.title}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-dark-900/30 to-transparent" />
+                      </>
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 bg-animated-gradient opacity-0 group-hover:opacity-5 transition-opacity duration-500" />
+                        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-500 via-magenta-500 to-printyellow-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                          <IconComponent size={36} className="text-white" />
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div className="p-6">
