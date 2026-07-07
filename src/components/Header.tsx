@@ -39,11 +39,18 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden group-hover:scale-105 transition-transform">
-              <img
-                src={`${import.meta.env.BASE_URL}logo.png`}
-                alt="Manav Graphics logo"
-                className="w-full h-full object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}logo.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}logo.png`}
+                  alt="Manav Graphics logo"
+                  width={128}
+                  height={128}
+                  fetchPriority="high"
+                  decoding="async"
+                  className="w-full h-full object-contain"
+                />
+              </picture>
             </div>
             <div>
               <h1 className={`font-poppins font-bold text-lg md:text-xl leading-tight transition-colors ${scrolled ? 'text-dark-900' : 'text-white'}`}>
